@@ -68,8 +68,8 @@ public class MainActivity extends AppCompatActivity {
             dialog.show();
 
             UploadTask uploadTask = storageReference.putFile(data.getData());
-            Toast.makeText(this, "OnActresult", Toast.LENGTH_SHORT).show();
-            Log.d("onactclick", String.valueOf(uploadTask));
+            Toast.makeText(this, "Upload started!!", Toast.LENGTH_SHORT).show();
+            Log.d("Upload Started", String.valueOf(uploadTask));
 
             //Create task
             Task<Uri> task = uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                 public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
                     if (!task.isSuccessful()){
                         Toast.makeText(MainActivity.this, "Failed", Toast.LENGTH_SHORT).show();
-
                         dialog.dismiss();
                     }
                     return storageReference.getDownloadUrl();
@@ -88,6 +87,7 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful()){
                         String url = task.getResult().toString().substring(0, task.getResult().toString().indexOf("&token"));
                         Log.d("DIRECTLINK", url);
+                        Toast.makeText(MainActivity.this, "Image Set!!", Toast.LENGTH_SHORT).show();
                         Picasso.get().load(url).into(image_view);
 
                         dialog.dismiss();
